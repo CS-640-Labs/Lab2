@@ -4,12 +4,16 @@ import net.floodlightcontroller.packet.Ethernet;
 import edu.wisc.cs.sdn.vnet.Device;
 import edu.wisc.cs.sdn.vnet.DumpFile;
 import edu.wisc.cs.sdn.vnet.Iface;
+import java.util.Map;
+
+import edu.wisc.cs.sdn.vnet.sw.TableEntry;
 
 /**
  * @author Aaron Gember-Jacobson
  */
 public class Switch extends Device
-{	
+{
+
 	/**
 	 * Creates a router for a specific host.
 	 * @param host hostname for the router
@@ -26,12 +30,20 @@ public class Switch extends Device
 	 */
 	public void handlePacket(Ethernet etherPacket, Iface inIface)
 	{
-		System.out.println("*** -> Received packet LOL: " +
+		System.out.println("*** -> Received packet: " +
                 etherPacket.toString().replace("\n", "\n\t"));
-		
-		/********************************************************************/
-		/* TODO: Handle packets                                             */
-		
-		/********************************************************************/
+
+		//		int c = etherPacket.getSourceMAC();
+		//		etherPacket.getDestinationMAC();
+
+		for (Map.Entry<String, Iface> entry : this.interfaces.entrySet()) {
+			this.sendPacket(etherPacket, entry.getValue());
+		}
+
+		// update table
+
+
+
+
 	}
 }
