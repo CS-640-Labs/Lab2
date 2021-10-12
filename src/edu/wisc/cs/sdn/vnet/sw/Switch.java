@@ -26,7 +26,7 @@ public class Switch extends Device
 	 */
 	public void handlePacket(Ethernet etherPacket, Iface inIface)
 	{
-		System.out.println("*** -> Received packet: " +
+		System.out.println("*** -> Received packet LOL: " +
                 etherPacket.toString().replace("\n", "\n\t"));
 		
 		/********************************************************************/
