@@ -4,15 +4,16 @@ import net.floodlightcontroller.packet.Ethernet;
 import edu.wisc.cs.sdn.vnet.Device;
 import edu.wisc.cs.sdn.vnet.DumpFile;
 import edu.wisc.cs.sdn.vnet.Iface;
+import net.floodlightcontroller.packet.MACAddress;
+import java.util.HashMap;
 import java.util.Map;
-
-import edu.wisc.cs.sdn.vnet.sw.TableEntry;
 
 /**
  * @author Aaron Gember-Jacobson
  */
 public class Switch extends Device
 {
+	private Map <MACAddress, TableEntry> forwardingTable = new HashMap<MACAddress, TableEntry>();
 
 	/**
 	 * Creates a router for a specific host.
@@ -33,17 +34,29 @@ public class Switch extends Device
 		System.out.println("*** -> Received packet: " +
                 etherPacket.toString().replace("\n", "\n\t"));
 
-		//		int c = etherPacket.getSourceMAC();
-		//		etherPacket.getDestinationMAC();
 
-		for (Map.Entry<String, Iface> entry : this.interfaces.entrySet()) {
-			this.sendPacket(etherPacket, entry.getValue());
+		// if destination mac in table and not timeout
+		TableEntry te = forwardingTable.get(etherPacket.getSourceMAC());
+		if(te != null && !te.isTimeout()) {
+				this.sendPacket(etherPacket, te.getInIface());
+				te.resetAge();
 		}
+		else {
+			// if timeout then remove table entry
+			if(te.isTimeout()) {
+				forwardingTable.remove(etherPacket.getSourceMAC());
+			}
 
-		// update table
+			// add to table
+			forwardingTable.put(etherPacket.getSourceMAC(), new TableEntry(inIface));
 
 
-
-
+			// broadcast
+			for (Map.Entry<String, Iface> entry : this.interfaces.entrySet()) {
+				if(entry.getValue() != inIface) {
+					this.sendPacket(etherPacket, entry.getValue());
+				}
+			}
+		}
 	}
 }

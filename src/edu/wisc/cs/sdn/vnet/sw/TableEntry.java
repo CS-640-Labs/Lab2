@@ -1,31 +1,24 @@
 package edu.wisc.cs.sdn.vnet.sw;
 
-import net.floodlightcontroller.packet.MACAddress;
 import edu.wisc.cs.sdn.vnet.Iface;
-
+import java.time.Instant;
 
 
 public class TableEntry {
-	private int age;
-	private MACAddress macAddr;
+	private long age;
 	private Iface inIface;
 
-	public TableEntry(MACAddress macAddr, Iface inIface) {
-		this.age = 15;
-		this.macAddr = macAddr;
+	public TableEntry(Iface inIface) {
+		this.age = Instant.now().getEpochSecond() + 15;
 		this.inIface = inIface;
 	}
 
-	public int getAge() {
-		return age;
-	}
-
 	public void resetAge() {
-		this.age = 15;
+		this.age = Instant.now().getEpochSecond() + 15;
 	}
 
-	public MACAddress getMacAddr() {
-		return macAddr;
+	public boolean isTimeout() {
+		return Instant.now().getEpochSecond() > this.age;
 	}
 
 	public Iface getInIface() {
