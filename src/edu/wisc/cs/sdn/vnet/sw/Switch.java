@@ -35,18 +35,20 @@ public class Switch extends Device
                 etherPacket.toString().replace("\n", "\n\t"));
 
 
-		// if destination mac in table and not timeout
+		// get table entry
 		TableEntry te = forwardingTable.get(etherPacket.getSourceMAC());
-		if(te != null && !te.isTimeout()) {
+
+		// if timeout then remove table entry
+		if(te != null && te.isTimeout()) {
+			forwardingTable.remove(etherPacket.getSourceMAC());
+		}
+
+		// if destination mac still in table
+		if(te != null) {
 				this.sendPacket(etherPacket, te.getInIface());
 				te.resetAge();
 		}
 		else {
-			// if timeout then remove table entry
-			if(te.isTimeout()) {
-				forwardingTable.remove(etherPacket.getSourceMAC());
-			}
-
 			// add to table
 			forwardingTable.put(etherPacket.getSourceMAC(), new TableEntry(inIface));
 

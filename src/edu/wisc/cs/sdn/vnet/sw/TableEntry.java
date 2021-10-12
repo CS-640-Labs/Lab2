@@ -18,8 +18,6 @@ public class TableEntry {
 	}
 
 	public boolean isTimeout() {
-		System.out.println(Instant.now().getEpochSecond());
-		System.out.println(this.age);
 		return Instant.now().getEpochSecond() > this.age;
 	}
 
