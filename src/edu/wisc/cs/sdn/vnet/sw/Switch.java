@@ -13,7 +13,7 @@ import java.util.Map;
  */
 public class Switch extends Device
 {
-	private Map <MACAddress, TableEntry> forwardingTable = new HashMap<MACAddress, TableEntry>();
+	private Map <MACAddress, TableEntry> forwardingTable = new HashMap<>();
 
 	/**
 	 * Creates a router for a specific host.
@@ -36,7 +36,7 @@ public class Switch extends Device
 
 
 		// get table entry
-		TableEntry te = forwardingTable.get(etherPacket.getSourceMAC());
+		TableEntry te = forwardingTable.get(etherPacket.getDestinationMAC());
 
 		// if timeout then remove table entry
 		if(te != null && te.isTimeout()) {
