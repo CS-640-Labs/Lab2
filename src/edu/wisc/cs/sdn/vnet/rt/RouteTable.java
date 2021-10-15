@@ -36,12 +36,26 @@ public class RouteTable
 	public RouteEntry lookup(int ip)
 	{
 		synchronized(this.entries) {
+			
 			RouteEntry longestEntry = null;
 			String[] ipSplit = IPv4.fromIPv4Address(ip).split(".", 0);
+			int  max_prefixes=0; // element1= max no. of matching prefixes ,
+									// element2=index of entry with largest matching prefixes 
 			for (RouteEntry entry : this.entries) {
-
-				for()
+				int matching_prefixes=0
+				String[] entryIpSplit = IPv4.fromIPv4Address(entry.getDestinationAddress()).split(".", 0);
+				for(int i=0;i<Math.min(len(ipSplit), len(entryIpSplit));i++){
+					if(ipSplit[i].equals(entryIpSplit[i])){
+						matching_prefixes=matching_prefixes+1;
+					}
+				}
+				if(matching_prefixes>max_prefixes){
+					max_prefixes=matching_prefixes
+					longestEntry = entry
+				}
+		
 			}
+			return longestEntry
 		}
 
 		return null;
