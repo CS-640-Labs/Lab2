@@ -36,8 +36,11 @@ public class RouteTable
 	public RouteEntry lookup(int ip)
 	{
 		synchronized(this.entries) {
+			RouteEntry longestEntry = null;
+			String[] ipSplit = IPv4.fromIPv4Address(ip).split(".", 0);
 			for (RouteEntry entry : this.entries) {
-				System.out.print(entry);
+
+				for()
 			}
 		}
 
