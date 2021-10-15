@@ -5,7 +5,7 @@ import edu.wisc.cs.sdn.vnet.Device;
 import edu.wisc.cs.sdn.vnet.DumpFile;
 import edu.wisc.cs.sdn.vnet.Iface;
 import net.floodlightcontroller.packet.MACAddress;
-import java.util.HashMap;
+import java.util.concurrent.*;
 import java.util.Map;
 
 /**
@@ -13,15 +13,40 @@ import java.util.Map;
  */
 public class Switch extends Device
 {
-	private Map <MACAddress, TableEntry> forwardingTable = new HashMap<>();
+	private ConcurrentHashMap <MACAddress, TableEntry> forwardingTable = new ConcurrentHashMap<>();
 
 	/**
 	 * Creates a router for a specific host.
 	 * @param host hostname for the router
 	 */
-	public Switch(String host, DumpFile logfile)
-	{
+	public Switch(String host, DumpFile logfile) {
 		super(host,logfile);
+
+		Runnable r = new Runnable() {
+			public void run() {
+				timoutEntries();
+			}
+		};
+
+		new Thread(r).start();
+	}
+
+	private void timoutEntries() {
+		while(true) {
+			for (Map.Entry<MACAddress, TableEntry> entry : forwardingTable.entrySet()) {
+
+				// if timeout then remove table entry
+				if(entry.getValue() != null && entry.getValue().isTimeout()) {
+					forwardingTable.remove(entry.getKey());
+				}
+			}
+
+			try {
+				Thread.sleep(500);
+			} catch(InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	/**
@@ -37,11 +62,6 @@ public class Switch extends Device
 
 		// get table entry
 		TableEntry te = forwardingTable.get(etherPacket.getDestinationMAC());
-
-		// if timeout then remove table entry
-		if(te != null && te.isTimeout()) {
-			forwardingTable.remove(etherPacket.getSourceMAC());
-		}
 
 		// if destination mac still in table
 		if(te != null) {
