@@ -35,15 +35,13 @@ public class RouteTable
 	 */
 	public RouteEntry lookup(int ip)
 	{
-		synchronized(this.entries)
-        {
-			/*****************************************************************/
-			/* TODO: Find the route entry with the longest prefix match      */
-			
-			return null;
-			
-			/*****************************************************************/
-        }
+		synchronized(this.entries) {
+			for (RouteEntry entry : this.entries) {
+				System.out.print(entry);
+			}
+		}
+
+		return null;
 	}
 	
 	/**
