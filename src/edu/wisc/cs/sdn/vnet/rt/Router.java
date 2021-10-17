@@ -120,7 +120,9 @@ public class Router extends Device
 
 						if(matchingEntry != null) {
 							// get mac address of arpCache next-hop
-							MACAddress macAddr = arpCache.lookup(packet.getDestinationAddress()).getMac();
+							System.out.print("Getting matching entry interface: ");
+							System.out.println(matchingEntry.getInterface().toString());
+							MACAddress macAddr = arpCache.lookup(matchingEntry.getInterface().getIpAddress()).getMac();
 
 							System.out.print("Arp Cache Mac: ");
 							System.out.println(macAddr.toString());
@@ -131,7 +133,7 @@ public class Router extends Device
 							// set packet source as port/interface mac-addr
 							etherPacket.setSourceMACAddress(inIface.getMacAddress().toBytes());
 
-							System.out.print("Sending packet out of");
+							System.out.print("Sending packet out of ");
 							System.out.println(matchingEntry.getInterface().toString());
 
 							// send packet out
