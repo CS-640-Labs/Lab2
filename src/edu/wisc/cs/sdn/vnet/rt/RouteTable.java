@@ -40,13 +40,15 @@ public class RouteTable
 			RouteEntry longestEntry = null;
 			String[] ipSplit = IPv4.fromIPv4Address(ip).split(".", 0);
 			int  max_prefixes=0; // element1= max no. of matching prefixes ,
-									// element2=index of entry with largest matching prefixes 
+
 			for (RouteEntry entry : this.entries) {
 				int matching_prefixes=0;
-				String[] entryIpSplit = IPv4.fromIPv4Address(entry.getMaskAddress()).split(".", 0);
+				String[] entryIpSplit = IPv4.fromIPv4Address(entry.getDestinationAddress()).split(".", 0);
 				for(int i=0;i<Math.min(ipSplit.length, entryIpSplit.length);i++){
+					System.out.print(ipSplit[i] + " = " + entryIpSplit[i] + " -> ");
 					if(ipSplit[i].equals(entryIpSplit[i])){
 						matching_prefixes=matching_prefixes+1;
+						System.out.println(matching_prefixes);
 					}
 				}
 				if(matching_prefixes>max_prefixes){
