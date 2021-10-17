@@ -136,6 +136,9 @@ public class Router extends Device
 							System.out.print("Sending packet out of ");
 							System.out.println(matchingEntry.toString());
 
+							System.out.print("packet info: ");
+							System.out.println(etherPacket.toString());
+
 							// send packet out
 							sendPacket(etherPacket, matchingEntry.getInterface());
 						}
