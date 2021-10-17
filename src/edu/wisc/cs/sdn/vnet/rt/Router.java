@@ -90,8 +90,8 @@ public class Router extends Device
 			IPv4 packet = ((IPv4)etherPacket.getPayload());
 
 			packet.resetChecksum();
-			System.out.println(packet.serialize()[0]);
-			System.out.println(~packet.getChecksum() & 0xffff);
+			System.out.println(Integer.toHexString(packet.serialize()[0]));
+			System.out.println(Integer.toHexString(~packet.getChecksum() & 0xffff));
 
 		}
 	}
