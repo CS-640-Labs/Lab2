@@ -89,10 +89,15 @@ public class Router extends Device
 			// check checksum is good and no error
 			IPv4 packet = ((IPv4)etherPacket.getPayload());
 
-			packet.resetChecksum();
-			System.out.println(Integer.toHexString(packet.serialize()[0]));
-			System.out.println(Integer.toHexString(~packet.getChecksum() & 0xffff));
+			short oldChecksum = packet.getChecksum();
 
+			packet.resetChecksum();
+			packet.serialize();
+
+			System.out.println(oldChecksum);
+			System.out.println(packet.getChecksum());
+
+			System.out.println(oldChecksum - packet.getChecksum());
 
 		}
 	}
