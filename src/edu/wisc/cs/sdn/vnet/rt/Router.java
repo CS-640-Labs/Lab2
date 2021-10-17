@@ -99,6 +99,8 @@ public class Router extends Device
 
 			if(oldChecksum - packet.getChecksum() == 0) {
 				packet.setTtl((byte) (packet.getTtl() - ((byte) 1)));
+				packet.resetChecksum();
+
 				// if ttl is zero then drop otherwise continue
 				if(packet.getTtl() != 0) {
 					// for each interface (port) of the router
