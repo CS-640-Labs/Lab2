@@ -7,6 +7,8 @@ import edu.wisc.cs.sdn.vnet.Iface;
 import net.floodlightcontroller.packet.Ethernet;
 import net.floodlightcontroller.packet.IPv4;
 
+import java.nio.ByteBuffer;
+
 /**
  * @author Aaron Gember-Jacobson and Anubhavnidhi Abhashkumar
  */
@@ -87,8 +89,12 @@ public class Router extends Device
 		// check if ipv4
 		if(Ethernet.etherTypeClassMap.get(etherPacket.getEtherType()) == IPv4.class) {
 			// check checksum is good and no error
-			long checksum = ((IPv4)etherPacket.getPayload()).getChecksum();
-			System.out.println(checksum);
+			IPv4 packet = ((IPv4)etherPacket.getPayload());
+
+			short oldChecksum = packet.getChecksum();
+			packet.resetChecksum();
+			System.out.println(packet.serialize());
+			System.out.println(~packet.getChecksum() & 0xffff);
 
 		}
 	}
