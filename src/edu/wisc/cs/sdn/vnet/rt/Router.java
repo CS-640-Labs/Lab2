@@ -94,11 +94,11 @@ public class Router extends Device
 
 			short oldChecksum = packet.getChecksum();
 
-			packet.resetChecksum();
 			packet.serialize();
 
 			if(oldChecksum - packet.getChecksum() == 0) {
 				packet.setTtl((byte) (packet.getTtl() - ((byte) 1)));
+
 				packet.resetChecksum();
 
 				// if ttl is zero then drop otherwise continue
