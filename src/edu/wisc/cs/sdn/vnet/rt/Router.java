@@ -6,6 +6,7 @@ import edu.wisc.cs.sdn.vnet.Iface;
 
 import net.floodlightcontroller.packet.Ethernet;
 import net.floodlightcontroller.packet.IPv4;
+import net.floodlightcontroller.packet.MACAddress;
 
 import java.util.Map;
 
@@ -115,6 +116,17 @@ public class Router extends Device
 						RouteEntry matchingEntry = this.routeTable.lookup(packet.getDestinationAddress());
 						// if not matching entry the drop
 						if(matchingEntry != null) {
+							// get mac address of arpCache next-hop
+							MACAddress macAddr = arpCache.lookup(matchingEntry.getDestinationAddress()).getMac();
+
+							// set next hop mac-addr as packet new destination
+							etherPacket.setDestinationMACAddress(macAddr.toBytes());
+
+							// set packet sourced as port/interface mac-addr
+							etherPacket.setSourceMACAddress(inIface.getMacAddress().toBytes());
+
+							// send packet out
+							sendPacket(etherPacket, inIface);
 
 						}
 					}
