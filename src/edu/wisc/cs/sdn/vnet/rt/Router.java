@@ -7,6 +7,8 @@ import edu.wisc.cs.sdn.vnet.Iface;
 import net.floodlightcontroller.packet.Ethernet;
 import net.floodlightcontroller.packet.IPv4;
 
+import java.util.Map;
+
 /**
  * @author Aaron Gember-Jacobson and Anubhavnidhi Abhashkumar
  */
@@ -94,11 +96,26 @@ public class Router extends Device
 			packet.resetChecksum();
 			packet.serialize();
 
-			System.out.println(oldChecksum);
-			System.out.println(packet.getChecksum());
-
-			System.out.println(oldChecksum - packet.getChecksum());
-
+			if(oldChecksum - packet.getChecksum() == 0) {
+				packet.setTtl((byte) (packet.getTtl() - ((byte) 1)));
+				// if ttl is zero then drop otherwise continue
+				if(packet.getTtl() != 0) {
+					// for each interface (port) of the router
+					// if IP matches destination of packet then drop
+					boolean drop = false;
+					for (Map.Entry<String, Iface> entry : this.getInterfaces().entrySet()) {
+						// drop if equal
+						if(entry.getValue().getIpAddress() == packet.getDestinationAddress()) {
+							drop = true;
+							break;
+						}
+					}
+					// if dest not one of iface ips
+					if(!drop) {
+						System.out.println("Here");
+					}
+				}
+			}
 		}
 	}
 }
