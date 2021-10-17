@@ -83,10 +83,13 @@ public class Router extends Device
 		System.out.println("*** -> Received packet: " +
                 etherPacket.toString().replace("\n", "\n\t"));
 
-		System.out.println(etherPacket.getEtherType());
-		
-//		if(etherPacket.getEtherType() == IPv4) {
-//			if(((IPv4) etherPacket.getPayload()).getChecksum() == )
-//		}
+
+		// check if ipv4
+		if(Ethernet.etherTypeClassMap.get(etherPacket.getEtherType()) == IPv4.class) {
+			// check checksum is good and no error
+			long checksum = ((IPv4)etherPacket.getPayload()).getChecksum();
+			System.out.println(checksum);
+
+		}
 	}
 }
