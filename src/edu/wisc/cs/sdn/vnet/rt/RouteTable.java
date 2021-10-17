@@ -35,6 +35,8 @@ public class RouteTable
 	 */
 	public RouteEntry lookup(int ip)
 	{
+
+		System.out.println("Router table lookup");
 		synchronized(this.entries) {
 			
 			RouteEntry longestEntry = null;
