@@ -127,7 +127,6 @@ public class Router extends Device
 
 							// send packet out
 							sendPacket(etherPacket, inIface);
-
 						}
 					}
 				}

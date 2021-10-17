@@ -43,7 +43,7 @@ public class RouteTable
 									// element2=index of entry with largest matching prefixes 
 			for (RouteEntry entry : this.entries) {
 				int matching_prefixes=0;
-				String[] entryIpSplit = IPv4.fromIPv4Address(entry.getMaskAddress()).split(".", 0);
+				String[] entryIpSplit = IPv4.fromIPv4Address(entry.getDestinationAddress()).split(".", 0);
 				for(int i=0;i<Math.min(ipSplit.length, entryIpSplit.length);i++){
 					if(ipSplit[i].equals(entryIpSplit[i])){
 						matching_prefixes=matching_prefixes+1;
