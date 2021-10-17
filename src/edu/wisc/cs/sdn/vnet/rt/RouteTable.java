@@ -51,6 +51,9 @@ public class RouteTable
 						matching_prefixes=matching_prefixes+1;
 						System.out.println(matching_prefixes);
 					}
+					else {
+						System.out.print("\n");
+					}
 				}
 				if(matching_prefixes>max_prefixes){
 					max_prefixes=matching_prefixes;
