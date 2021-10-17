@@ -117,10 +117,8 @@ public class Router extends Device
 						// if not matching entry the drop
 
 						if(matchingEntry != null) {
-							System.out.println(IPv4.fromIPv4Address(~matchingEntry.getMaskAddress() & matchingEntry.getDestinationAddress()));
-
 							// get mac address of arpCache next-hop
-							MACAddress macAddr = arpCache.lookup(matchingEntry.getDestinationAddress()).getMac();
+							MACAddress macAddr = arpCache.lookup(packet.getDestinationAddress()).getMac();
 
 							// set next hop mac-addr as packet new destination
 							etherPacket.setDestinationMACAddress(macAddr.toBytes());
