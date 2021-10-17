@@ -112,7 +112,11 @@ public class Router extends Device
 					}
 					// if dest not one of iface ips
 					if(!drop) {
-						System.out.println("Here");
+						RouteEntry matchingEntry = this.routeTable.lookup(packet.getDestinationAddress());
+						// if not matching entry the drop
+						if(matchingEntry != null) {
+
+						}
 					}
 				}
 			}
