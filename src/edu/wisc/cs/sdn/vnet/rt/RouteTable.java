@@ -36,7 +36,7 @@ public class RouteTable
 	public RouteEntry lookup(int ip)
 	{
 
-		System.out.println("Router table lookup");
+		System.out.println(this.entries.toArray());
 		synchronized(this.entries) {
 			
 			RouteEntry longestEntry = null;
@@ -46,6 +46,7 @@ public class RouteTable
 			for (RouteEntry entry : this.entries) {
 				int matching_prefixes=0;
 				String[] entryIpSplit = IPv4.fromIPv4Address(entry.getDestinationAddress()).split(".", 0);
+				System.out.println(Math.min(ipSplit.length, entryIpSplit.length));
 				for(int i=0;i<Math.min(ipSplit.length, entryIpSplit.length);i++){
 					System.out.print(ipSplit[i] + " = " + entryIpSplit[i] + " -> ");
 					if(ipSplit[i].equals(entryIpSplit[i])){
