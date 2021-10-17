@@ -116,6 +116,7 @@ public class Router extends Device
 						RouteEntry matchingEntry = this.routeTable.lookup(packet.getDestinationAddress());
 						// if not matching entry the drop
 						System.out.println(packet.getDestinationAddress());
+						System.out.println(packet.toString());
 
 						if(matchingEntry != null) {
 							System.out.println(matchingEntry.toString());
