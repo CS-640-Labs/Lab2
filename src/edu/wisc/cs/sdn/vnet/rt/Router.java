@@ -93,6 +93,7 @@ public class Router extends Device
 			System.out.println(Integer.toHexString(packet.serialize()[0]));
 			System.out.println(Integer.toHexString(~packet.getChecksum() & 0xffff));
 
+
 		}
 	}
 }
