@@ -118,16 +118,16 @@ public class Router extends Device
 
 						if(matchingEntry != null) {
 							// get mac address of arpCache next-hop
-							MACAddress macAddr = arpCache.lookup(packet.getDestinationAddress()).getMac();
+							MACAddress macAddr = arpCache.lookup(matchingEntry.getDestinationAddress()).getMac();
 
 							// set next hop mac-addr as packet new destination
 							etherPacket.setDestinationMACAddress(macAddr.toBytes());
 
-							// set packet sourced as port/interface mac-addr
+							// set packet source as port/interface mac-addr
 							etherPacket.setSourceMACAddress(inIface.getMacAddress().toBytes());
 
 							// send packet out
-							sendPacket(etherPacket, inIface);
+							sendPacket(etherPacket, matchingEntry.getInterface());
 						}
 					}
 				}
