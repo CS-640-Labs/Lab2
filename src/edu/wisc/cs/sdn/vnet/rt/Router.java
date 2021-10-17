@@ -114,27 +114,17 @@ public class Router extends Device
 					// if dest not one of iface ips
 					if(!drop) {
 						RouteEntry matchingEntry = this.routeTable.lookup(packet.getDestinationAddress());
-						System.out.print("Route Table Entry: ");
-						System.out.println(matchingEntry.toString());
 						// if not matching entry the drop
 
 						if(matchingEntry != null) {
 							// get mac address of arpCache next-hop
-							System.out.print("Getting matching entry interface: ");
-							System.out.println(matchingEntry.getInterface().toString());
-							MACAddress macAddr = arpCache.lookup(packet.getDestinationAddress()).getMac();
-
-							System.out.print("Arp Cache Mac: ");
-							System.out.println(macAddr.toString());
+							MACAddress nextHopMAC = arpCache.lookup(packet.getDestinationAddress()).getMac();
 
 							// set next hop mac-addr as packet new destination
-							etherPacket.setDestinationMACAddress(macAddr.toBytes());
+							etherPacket.setDestinationMACAddress(nextHopMAC.toBytes());
 
 							// set packet source as port/interface mac-addr
 							etherPacket.setSourceMACAddress(matchingEntry.getInterface().getMacAddress().toBytes());
-
-							System.out.print("Sending packet out of ");
-							System.out.println(matchingEntry.toString());
 
 							System.out.print("packet info: ");
 							System.out.println(etherPacket.toString());
