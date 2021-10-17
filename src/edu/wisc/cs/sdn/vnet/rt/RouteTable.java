@@ -46,13 +46,10 @@ public class RouteTable
 				int matching_prefixes=0;
 				String[] entryIpSplit = IPv4.fromIPv4Address(entry.getDestinationAddress()).split("\\.", 0);
 				for(int i=0;i<Math.min(ipSplit.length, entryIpSplit.length);i++){
-					System.out.print(ipSplit[i] + " = " + entryIpSplit[i] + " -> ");
 					if(ipSplit[i].equals(entryIpSplit[i])){
 						matching_prefixes=matching_prefixes+1;
-						System.out.println(matching_prefixes);
 					}
 					else {
-						System.out.print("\n");
 					}
 				}
 				if(matching_prefixes>max_prefixes){

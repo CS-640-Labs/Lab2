@@ -115,12 +115,12 @@ public class Router extends Device
 					if(!drop) {
 						RouteEntry matchingEntry = this.routeTable.lookup(packet.getDestinationAddress());
 						// if not matching entry the drop
-						System.out.println(IPv4.fromIPv4Address(packet.getDestinationAddress()));
-
 
 						if(matchingEntry != null) {
 							System.out.println(matchingEntry.toString());
 							// get mac address of arpCache next-hop
+							System.out.println(matchingEntry.getDestinationAddress());
+							System.out.println(arpCache.lookup(matchingEntry.getDestinationAddress()).toString());
 							MACAddress macAddr = arpCache.lookup(matchingEntry.getDestinationAddress()).getMac();
 							System.out.println(macAddr.toString());
 							// set next hop mac-addr as packet new destination
