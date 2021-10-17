@@ -39,14 +39,12 @@ public class RouteTable
 		synchronized(this.entries) {
 			
 			RouteEntry longestEntry = null;
-			String[] ipSplit = IPv4.fromIPv4Address(ip).split(".", 0);
+			String[] ipSplit = IPv4.fromIPv4Address(ip).split("\\.", 0);
 			int  max_prefixes=0; // element1= max no. of matching prefixes ,
 
 			for (RouteEntry entry : this.entries) {
 				int matching_prefixes=0;
 				String[] entryIpSplit = IPv4.fromIPv4Address(entry.getDestinationAddress()).split("\\.", 0);
-				System.out.println(IPv4.fromIPv4Address(entry.getDestinationAddress()));
-				System.out.println(IPv4.fromIPv4Address(entry.getDestinationAddress()).split("\\.", 0).length);
 				for(int i=0;i<Math.min(ipSplit.length, entryIpSplit.length);i++){
 					System.out.print(ipSplit[i] + " = " + entryIpSplit[i] + " -> ");
 					if(ipSplit[i].equals(entryIpSplit[i])){
