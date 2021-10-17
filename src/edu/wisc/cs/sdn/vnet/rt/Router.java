@@ -114,11 +114,16 @@ public class Router extends Device
 					// if dest not one of iface ips
 					if(!drop) {
 						RouteEntry matchingEntry = this.routeTable.lookup(packet.getDestinationAddress());
+						System.out.print("Route Table Entry: ");
+						System.out.println(matchingEntry.toString());
 						// if not matching entry the drop
 
 						if(matchingEntry != null) {
 							// get mac address of arpCache next-hop
 							MACAddress macAddr = arpCache.lookup(packet.getDestinationAddress()).getMac();
+
+							System.out.print("Arp Cache Mac: ");
+							System.out.println(macAddr.toString());
 
 							// set next hop mac-addr as packet new destination
 							etherPacket.setDestinationMACAddress(macAddr.toBytes());
