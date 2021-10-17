@@ -7,8 +7,6 @@ import edu.wisc.cs.sdn.vnet.Iface;
 import net.floodlightcontroller.packet.Ethernet;
 import net.floodlightcontroller.packet.IPv4;
 
-import java.nio.ByteBuffer;
-
 /**
  * @author Aaron Gember-Jacobson and Anubhavnidhi Abhashkumar
  */
@@ -91,9 +89,8 @@ public class Router extends Device
 			// check checksum is good and no error
 			IPv4 packet = ((IPv4)etherPacket.getPayload());
 
-			short oldChecksum = packet.getChecksum();
 			packet.resetChecksum();
-			System.out.println(packet.serialize());
+			System.out.println(packet.serialize()[0]);
 			System.out.println(~packet.getChecksum() & 0xffff);
 
 		}
