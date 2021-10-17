@@ -118,7 +118,7 @@ public class Router extends Device
 
 						if(matchingEntry != null) {
 							// get mac address of arpCache next-hop
-							MACAddress macAddr = arpCache.lookup(matchingEntry.getDestinationAddress()).getMac();
+							MACAddress macAddr = arpCache.lookup(packet.getDestinationAddress()).getMac();
 
 							// set next hop mac-addr as packet new destination
 							etherPacket.setDestinationMACAddress(macAddr.toBytes());
