@@ -101,6 +101,8 @@ public class Router extends Device
 				packet.setTtl((byte) (packet.getTtl() - ((byte) 1)));
 
 				packet.resetChecksum();
+				packet.serialize();
+
 
 				// if ttl is zero then drop otherwise continue
 				if(packet.getTtl() != 0) {
