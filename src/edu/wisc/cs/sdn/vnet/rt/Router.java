@@ -94,6 +94,7 @@ public class Router extends Device
 
 			short oldChecksum = packet.getChecksum();
 
+			packet.resetChecksum();
 			packet.serialize();
 
 			if(oldChecksum - packet.getChecksum() == 0) {
