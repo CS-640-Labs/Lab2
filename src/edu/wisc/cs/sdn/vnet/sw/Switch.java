@@ -79,10 +79,6 @@ public class Switch extends Device
 					this.sendPacket(etherPacket, entry.getValue());
 				}
 			}
-		}
 
-		for(Map.Entry<MACAddress, TableEntry> entry : forwardingTable.entrySet()) {
-			System.out.println(entry.getKey());
-		}
 	}
 }

@@ -120,14 +120,6 @@ public class Router extends Device
 						// if not matching entry the drop
 
 
-						System.out.println(IPv4.fromIPv4Address(matchingEntry.getGatewayAddress()));
-
-
-						/*
-						You should not forward packets if the destination (after lookups) points
-						 to the interface from which it is received. Simply drop such packets.
-						 */
-
 						if(matchingEntry != null) {
 							// get mac address of arpCache next-hop
 							MACAddress nextHopMAC = arpCache.lookup(packet.getDestinationAddress()).getMac();
