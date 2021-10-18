@@ -127,8 +127,6 @@ public class Router extends Device
 							etherPacket.setDestinationMACAddress(nextHopMAC.toBytes());
 
 							// set packet source as port/interface mac-addr
-							System.out.println(matchingEntry);
-							System.out.println(matchingEntry.getInterface());
 							etherPacket.setSourceMACAddress(matchingEntry.getInterface().getMacAddress().toBytes());
 
 							// send packet out
