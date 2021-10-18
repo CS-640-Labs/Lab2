@@ -80,5 +80,9 @@ public class Switch extends Device
 				}
 			}
 		}
+
+		for(Map.Entry<MACAddress, TableEntry> entry : forwardingTable.entrySet()) {
+			System.out.println(entry.getKey());
+		}
 	}
 }
