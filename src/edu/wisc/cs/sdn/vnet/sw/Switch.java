@@ -75,10 +75,11 @@ public class Switch extends Device
 
 			// broadcast
 			for (Map.Entry<String, Iface> entry : this.interfaces.entrySet()) {
-				if(entry.getValue() != inIface) {
+				if (entry.getValue() != inIface) {
 					this.sendPacket(etherPacket, entry.getValue());
 				}
 			}
+		}
 
 	}
 }
