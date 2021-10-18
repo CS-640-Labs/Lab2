@@ -37,33 +37,12 @@ public class RouteTable
 	{
 
 		synchronized(this.entries) {
-			
-			//RouteEntry longestEntry = null;
-			//String[] ipSplit = IPv4.fromIPv4Address(ip).split("\\.", 0);
-			//int  max_prefixes=0; // element1= max no. of matching prefixes ,
-
 			for (RouteEntry entry : this.entries) {
-
-				if((ip & entry.getMaskAddress()) == entry.getDestinationAddress()) {
+				if ((ip & entry.getMaskAddress()) == entry.getDestinationAddress()) {
 					return entry;
 				}
-
-//				int matching_prefixes=0;
-//				String[] entryIpSplit = IPv4.fromIPv4Address(entry.getDestinationAddress()).split("\\.", 0);
-//				for(int i=0;i<Math.min(ipSplit.length, entryIpSplit.length);i++){
-//					if(ipSplit[i].equals(entryIpSplit[i])){
-//						matching_prefixes=matching_prefixes+1;
-//					}
-//					else {
-//					}
-//				}
-//				if(matching_prefixes>max_prefixes){
-//					max_prefixes=matching_prefixes;
-//					longestEntry = entry;
-//				}
-//
-//			}
-//			return longestEntry;
+			}
+			return null;
 		}
 	}
 	
