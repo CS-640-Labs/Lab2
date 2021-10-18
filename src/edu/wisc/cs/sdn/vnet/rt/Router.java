@@ -121,7 +121,7 @@ public class Router extends Device
 						RouteEntry matchingEntry = this.routeTable.lookup(packet.getDestinationAddress());
 
 						// if not matching entry the drop
-						if(matchingEntry != null) {
+						if(matchingEntry != null && matchingEntry.getInterface().getMacAddress() != inIface.getMacAddress()) {
 							int addr = packet.getDestinationAddress();
 							if(matchingEntry.getGatewayAddress() != 0) {
 								addr = matchingEntry.getGatewayAddress();
